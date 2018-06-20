@@ -1,0 +1,28 @@
+﻿@model Andrade.Chamados.Web.Models.CadastrarUsuarioViewModel
+
+@{
+    ViewBag.Title = "Cadastrar usuário";
+    Layout = "~/Views/Shared/_LayoutPage01.cshtml";
+}
+
+<b><h2>Cadastrar usuários</h2></b>
+
+<em>@ViewBag.Mensagem</em>
+
+@using (Html.BeginForm())
+{
+    <label> Nome</label><br />
+    @Html.TextBoxFor(x => x.Nome);
+    <br /><br />
+    <label> E-mail </label><br />
+    @Html.TextBoxFor(x => x.Email);
+    <br /><br />
+    <label> Telefone </label><br />
+    @Html.TextBoxFor(x => x.Telefone);
+    <br /><br />
+    <label> Senha </label><br />
+    @Html.TextBoxFor(x => x.Senha);
+    <br /><br />
+    <input type="submit" name="Cadastrar" value="Cadastrar" />
+}-
+
