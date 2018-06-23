@@ -14,7 +14,6 @@ namespace Andrade.Chamados.Web.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            ViewBag.Mensagem = " Welcome user! ";
             return View();
         }
 
@@ -26,27 +25,62 @@ namespace Andrade.Chamados.Web.Controllers
                 ViewBag.Erro = " Usuário inválido";
                 return View();
             }
-            return View();
+
+            // Válida usuário
+            if (login.Email == "senai@senai.sp" && login.Senha == "12345")
+            {
+                TempData["Autenticado"] = " Usuário autenticado";
+                // Redireciona para página Home
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["Autenticado"] = " Usuário não cadastrado";
+                // Redireciona para página de Cadastro de usuário
+                return RedirectToAction("CadastrarUsuario");
+            }
         }
 
         [HttpGet]
         public ActionResult CadastrarUsuario()
         {
-            ViewBag.Mensagem = " You're already cadastrated! ";
-            return View();
+            CadastrarUsuarioViewModel cadastrarUsuario = new CadastrarUsuarioViewModel();
+            // cadastrarUsuario.Nome = " Marcos Andrade";
+            // cadastrarUsuario.Email = " andrade.ti@outlook.com";
+
+            cadastrarUsuario.Sexo = new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem{ Text = "Masculino", Value = "1"},
+                    new SelectListItem{ Text = "Feminino", Value = "2"},
+                }, "Value", "Text");
+
+            return View(cadastrarUsuario);
         }
 
         [HttpPost]
         public ActionResult CadastrarUsuario(CadastrarUsuarioViewModel usuario)
         {
+            usuario.Sexo = ListarSexo();
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Erro = " Dados invalidos";
-                return View();
+                return View(usuario);
             }
 
-            //TODO: efetuar cadastro banco de dados
-            return View();
+           //TODO: efetuar cadastro banco de dados
+            return View(usuario);
+        }
+
+        private SelectList ListarSexo()
+        {
+            return new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem{ Text = "Masculino", Value = "1"},
+                    new SelectListItem{ Text = "Feminino", Value = "2"},
+                }, "Value", "Text");
         }
     }
 }

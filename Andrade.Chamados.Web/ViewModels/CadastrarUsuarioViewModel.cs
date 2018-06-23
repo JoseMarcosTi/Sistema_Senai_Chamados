@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Andrade.Chamados.Web.Models
 {
@@ -28,6 +29,10 @@ namespace Andrade.Chamados.Web.Models
         [DataType(DataType.Password)]
         public string Senha { get; set; }
 
+
+        public SelectList Sexo { get; set; }
+        [Required(ErrorMessage = "Informe o sexo")]
+        public string SexoId { get; set; }
 
     }
 }
