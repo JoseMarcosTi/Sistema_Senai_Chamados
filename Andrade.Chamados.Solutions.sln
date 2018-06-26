@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Andrade.Chamados.Web", "Andrade.Chamados.Web\Andrade.Chamados.Web.csproj", "{C55409E7-ACF8-4EB5-8CF0-6190C5B14725}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Andrade.Chamados.Domain", "Andrade.Chamado.Domain\Andrade.Chamados.Domain.csproj", "{E0A1D219-C048-4A97-9AE9-77AA89A4AF83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Andrade.Chamados.Data", "Andrade.Chamados.Data\Andrade.Chamados.Data.csproj", "{DDBDB7C5-F98F-4D32-9CAE-5D763E8639F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C55409E7-ACF8-4EB5-8CF0-6190C5B14725}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C55409E7-ACF8-4EB5-8CF0-6190C5B14725}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C55409E7-ACF8-4EB5-8CF0-6190C5B14725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A1D219-C048-4A97-9AE9-77AA89A4AF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A1D219-C048-4A97-9AE9-77AA89A4AF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A1D219-C048-4A97-9AE9-77AA89A4AF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A1D219-C048-4A97-9AE9-77AA89A4AF83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDBDB7C5-F98F-4D32-9CAE-5D763E8639F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDBDB7C5-F98F-4D32-9CAE-5D763E8639F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDBDB7C5-F98F-4D32-9CAE-5D763E8639F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDBDB7C5-F98F-4D32-9CAE-5D763E8639F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

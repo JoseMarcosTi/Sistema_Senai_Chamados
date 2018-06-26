@@ -1,4 +1,6 @@
-﻿using Andrade.Chamados.Web.Models;
+﻿using Andrade.Chamado.Domain.Entidades;
+using Andrade.Chamados.Data.Contexto;
+using Andrade.Chamados.Web.Models;
 using Andrade.Chamados.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -69,7 +71,24 @@ namespace Andrade.Chamados.Web.Controllers
                 return View(usuario);
             }
 
-           //TODO: efetuar cadastro banco de dados
+
+            AndradeChamadosDbContext context = new AndradeChamadosDbContext();
+            UsuarioDomain usuarioBanco = new UsuarioDomain();
+
+            /*
+             context: string de conexão
+             usuario: dados da viewModel
+             usuarioBanco:Dados da UsuarioDomaim
+             */
+            usuarioBanco.Nome = usuario.Nome;
+            usuarioBanco.Email = usuario.Email;
+            usuarioBanco.Senha = usuario.Senha;
+            usuarioBanco.Telefone = usuario.Telefone;
+           
+            //
+            context.Usuarios.Add(usuarioBanco);
+            context.SaveChanges();
+
             return View(usuario);
         }
 
@@ -83,4 +102,5 @@ namespace Andrade.Chamados.Web.Controllers
                 }, "Value", "Text");
         }
     }
+
 }
