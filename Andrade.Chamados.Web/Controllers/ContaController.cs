@@ -71,25 +71,48 @@ namespace Andrade.Chamados.Web.Controllers
                 return View(usuario);
             }
 
-
             AndradeChamadosDbContext context = new AndradeChamadosDbContext();
             UsuarioDomain usuarioBanco = new UsuarioDomain();
 
-            /*
-             context: string de conexão
-             usuario: dados da viewModel
-             usuarioBanco:Dados da UsuarioDomaim
-             */
-            usuarioBanco.Nome = usuario.Nome;
-            usuarioBanco.Email = usuario.Email;
-            usuarioBanco.Senha = usuario.Senha;
-            usuarioBanco.Telefone = usuario.Telefone;
-           
-            //
-            context.Usuarios.Add(usuarioBanco);
-            context.SaveChanges();
+            try
+            {
+                usuarioBanco.Id = Guid.NewGuid();
+                usuarioBanco.Nome = usuario.Nome;
+                usuarioBanco.Email = usuario.Email;
+                usuarioBanco.Senha = usuario.Senha;
+                usuarioBanco.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
+                usuarioBanco.Cpf = usuario.Cpf.Replace(".", "").Replace("-","").Trim();
+                usuarioBanco.Cep = usuario.Cep.Replace("-","").Trim();
+                usuarioBanco.Logradouro = usuario.Logradouro;
+                usuarioBanco.Complemento = usuario.Complemento;
+                usuarioBanco.Bairro = usuario.Bairro;
+                usuarioBanco.Cidade = usuario.Cidade;
+                usuarioBanco.Estado = usuario.Estado;
+                usuarioBanco.DataCriacao = DateTime.Now;
+                usuarioBanco.DataAlteracao = DateTime.Now;
 
-            return View(usuario);
+                
+                context.Usuarios.Add(usuarioBanco);
+                context.SaveChanges();
+
+                TempData["Mensagem"] = " Usuário Cadastrado";
+                return RedirectToAction("Login");
+            }
+            catch (System.Exception ex)
+            {
+
+                ViewBag.Erro = ex.Message;
+                return View(usuario);
+
+            }
+            finally
+            {
+                context = null;
+                usuarioBanco = null;
+            }
+
+           
+
         }
 
         private SelectList ListarSexo()
