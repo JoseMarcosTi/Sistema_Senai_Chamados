@@ -1,5 +1,6 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
 using Andrade.Chamados.Data.Contexto;
+using Andrade.Chamados.Data.Repositorios;
 using Andrade.Chamados.Web.Models;
 using Andrade.Chamados.Web.ViewModels;
 using System;
@@ -28,19 +29,21 @@ namespace Andrade.Chamados.Web.Controllers
                 return View();
             }
 
-            // Válida usuário
-            if (login.Email == "senai@senai.sp" && login.Senha == "12345")
+            using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
             {
-                TempData["Autenticado"] = " Usuário autenticado";
-                // Redireciona para página Home
-                return RedirectToAction("Index", "Home");
+                UsuarioDomain usuarioDomain = _repUsuario.Login(login.Email, login.Senha);
+
+                if (usuarioDomain != null)
+                {
+                    return RedirectToAction("Index", "Usuario");
+                }
+                else
+                {
+                    ViewBag.Erro = " Usuário ou senha inválidos. Tente novamente";
+                    return View(login);
+                }
             }
-            else
-            {
-                TempData["Autenticado"] = " Usuário não cadastrado";
-                // Redireciona para página de Cadastro de usuário
-                return RedirectToAction("CadastrarUsuario");
-            }
+            
         }
 
         [HttpGet]
@@ -76,7 +79,7 @@ namespace Andrade.Chamados.Web.Controllers
 
             try
             {
-                usuarioBanco.Id = Guid.NewGuid();
+               // usuarioBanco.Id = Guid.NewGuid();
                 usuarioBanco.Nome = usuario.Nome;
                 usuarioBanco.Email = usuario.Email;
                 usuarioBanco.Senha = usuario.Senha;
@@ -88,12 +91,14 @@ namespace Andrade.Chamados.Web.Controllers
                 usuarioBanco.Bairro = usuario.Bairro;
                 usuarioBanco.Cidade = usuario.Cidade;
                 usuarioBanco.Estado = usuario.Estado;
-                usuarioBanco.DataCriacao = DateTime.Now;
-                usuarioBanco.DataAlteracao = DateTime.Now;
+              //  usuarioBanco.DataCriacao = DateTime.Now;
+              //  usuarioBanco.DataAlteracao = DateTime.Now;
 
-                
-                context.Usuarios.Add(usuarioBanco);
-                context.SaveChanges();
+
+                using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
+                {
+                    _repUsuario.Inserir(usuarioBanco);
+                }
 
                 TempData["Mensagem"] = " Usuário Cadastrado";
                 return RedirectToAction("Login");
