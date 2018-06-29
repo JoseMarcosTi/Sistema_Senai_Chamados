@@ -3,6 +3,7 @@ using Andrade.Chamados.Data.Contexto;
 using Andrade.Chamados.Data.Repositorios;
 using Andrade.Chamados.Web.Models;
 using Andrade.Chamados.Web.ViewModels;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,30 +75,15 @@ namespace Andrade.Chamados.Web.Controllers
                 return View(usuario);
             }
 
-            AndradeChamadosDbContext context = new AndradeChamadosDbContext();
-            UsuarioDomain usuarioBanco = new UsuarioDomain();
-
             try
             {
-               // usuarioBanco.Id = Guid.NewGuid();
-                usuarioBanco.Nome = usuario.Nome;
-                usuarioBanco.Email = usuario.Email;
-                usuarioBanco.Senha = usuario.Senha;
-                usuarioBanco.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
-                usuarioBanco.Cpf = usuario.Cpf.Replace(".", "").Replace("-","").Trim();
-                usuarioBanco.Cep = usuario.Cep.Replace("-","").Trim();
-                usuarioBanco.Logradouro = usuario.Logradouro;
-                usuarioBanco.Complemento = usuario.Complemento;
-                usuarioBanco.Bairro = usuario.Bairro;
-                usuarioBanco.Cidade = usuario.Cidade;
-                usuarioBanco.Estado = usuario.Estado;
-              //  usuarioBanco.DataCriacao = DateTime.Now;
-              //  usuarioBanco.DataAlteracao = DateTime.Now;
-
-
+                usuario.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
+                usuario.Cpf = usuario.Cpf.Replace(".", "").Replace("-","").Trim();
+                usuario.Cep = usuario.Cep.Replace("-","").Trim();
+                               
                 using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
                 {
-                    _repUsuario.Inserir(usuarioBanco);
+                    _repUsuario.Inserir(Mapper.Map<CadastrarUsuarioViewModel, UsuarioDomain>(usuario));
                 }
 
                 TempData["Mensagem"] = " Usuário Cadastrado";
@@ -109,14 +95,7 @@ namespace Andrade.Chamados.Web.Controllers
                 ViewBag.Erro = ex.Message;
                 return View(usuario);
 
-            }
-            finally
-            {
-                context = null;
-                usuarioBanco = null;
-            }
-
-           
+            }    
 
         }
 
