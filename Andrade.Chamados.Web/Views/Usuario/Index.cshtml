@@ -5,27 +5,45 @@
     Layout = "~/Views/Shared/_LayoutPage01.cshtml";
 }
 
-<h2> Tela do Usuário </h2>
+@section Styles{
 
-<br />
+<link href="http://getbootstrap.com/docs/4.1/examples/starter-template/starter-template.css" rel="stylesheet">
 
-<table>
-    <thead>
-        <tr>
-            <th> Nome </th>
-            <th> E-mail </th>
-            <th> Telefone </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var usuario in Model.ListaUsuarios)
-        {
-            <tr>
-                <td> @Html.DisplayFor(x => usuario.Nome)</td>
-                <td> @Html.DisplayFor(x => usuario.Email)</td>
-                <td> @Html.DisplayFor(x => usuario.Telefone)</td>
-            </tr>
-        }
-    </tbody>
-</table>
+}
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Tela de usuário</h1>
+
+        @TempData["Erro"]
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"> Nome </th>
+                    <th scope="col"> E-mail </th>
+                    <th scope="col"> Telefone </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model.ListaUsuarios)
+                {
+                <tr>
+                    <td> @Html.DisplayFor(x => usuario.Nome)</td>
+                    <td> @Html.DisplayFor(x => usuario.Email)</td>
+                    <td> @Html.DisplayFor(x => usuario.Telefone)</td>
+                    <td><a href="/Usuario/Editar/@usuario.Id"> Editar </a></td>
+                    <td><a href="/Usuario/Deletar/@usuario.Id"> Deletar </a></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</main>
+
+
 

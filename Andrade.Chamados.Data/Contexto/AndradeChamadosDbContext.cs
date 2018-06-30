@@ -36,7 +36,7 @@ namespace Andrade.Chamados.Data.Contexto
 
                     if (entry.State == EntityState.Modified)
                     {
-                        entry.Property("DataCracao").IsModified = false;
+                        entry.Property("DataCriacao").IsModified = false;
                         entry.Property("DataAlteracao").CurrentValue = DateTime.Now;
                     }
                 }

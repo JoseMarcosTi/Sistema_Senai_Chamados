@@ -36,7 +36,7 @@ namespace Andrade.Chamados.Web.ViewModels.Usuario
         public string Cpf { get; set; }
 
         public SelectList Sexo { get; set; }
-        [Required(ErrorMessage = "Informe o sexo")]
+        //[Required(ErrorMessage = "Informe o sexo")]
         public string SexoId { get; set; }
 
         [MaxLength(9, ErrorMessage = " O CEP deve conter 11 números")]

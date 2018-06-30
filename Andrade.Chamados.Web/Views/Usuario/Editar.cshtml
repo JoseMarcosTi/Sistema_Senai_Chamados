@@ -1,7 +1,7 @@
-﻿@model Andrade.Chamados.Web.Models.CadastrarUsuarioViewModel
+﻿@model Andrade.Chamados.Web.ViewModels.Usuario.UsuarioViewModel
 
 @{
-    ViewBag.Title = "Cadastrar usuário";
+    ViewBag.Title = "Editar usuário";
     Layout = "~/Views/Shared/_LayoutPage01.cshtml";
 }
 
@@ -10,20 +10,19 @@
 
 }
 
-@using (Html.BeginForm("CadastrarUsuario", "Conta", FormMethod.Post, new { @class = "form-signin" }))
+@using (Html.BeginForm("Editar", "Usuario", FormMethod.Post, new { @class = "form-signin" }))
 {
     @Html.AntiForgeryToken()
     @ViewBag.Autenticado
 
     <div class="text-center mb-4">
-        <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <br />
-        <img class="mb-4" src="~/Content/img/SENAI.png" alt="" width="150" height="80" />
-        <br />
-        <h2> Criar conta </h2>
+       <h1 class="h3 mb-3 font-weight-normal"> Editar usuário </h1>
+       <p> Altere os dados do usuário </p>
     </div>
 
     <p>@ViewBag.Erro</p>
+
+    @Html.HiddenFor(x => x.Id);
 
     <div class="form-label-group">
 
@@ -61,10 +60,10 @@
         @Html.ValidationMessageFor(x => x.Cpf)
     </div>
 
-
-    <div class="form-label-group">
+    
+    @*<div class="form-label-group">
         @Html.DropDownListFor(x => x.SexoId, Model.Sexo, " Selecione sexo", new { @class = "form-control" })
-    </div>
+    </div>*@
 
 
     <div class="form-label-group">
@@ -134,6 +133,3 @@
     </script>
 
 }
-
-
-

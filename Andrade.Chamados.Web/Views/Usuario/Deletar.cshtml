@@ -1,0 +1,23 @@
+﻿@model Andrade.Chamados.Web.ViewModels.Usuario.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Deletar";
+    Layout = "~/Views/Shared/_LayoutPage01.cshtml";
+}
+
+<h2>Excluír usuário</h2>
+
+@using (Html.BeginForm("Deletar", "Usuario", FormMethod.Post))
+{
+    @Html.HiddenFor( x => x.Id)
+
+    @Html.AntiForgeryToken()
+
+    <br /><br />
+
+    <p> Você realmente deseja excluír o usuário @Model.Nome ? </p>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Excluír</button>
+
+}
+

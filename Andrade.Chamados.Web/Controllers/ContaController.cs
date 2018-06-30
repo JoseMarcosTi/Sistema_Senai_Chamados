@@ -22,6 +22,7 @@ namespace Andrade.Chamados.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public  ActionResult Login(LoginViewModel login)
         {
             if (!ModelState.IsValid)
@@ -65,6 +66,7 @@ namespace Andrade.Chamados.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CadastrarUsuario(CadastrarUsuarioViewModel usuario)
         {
             usuario.Sexo = ListarSexo();
@@ -77,7 +79,7 @@ namespace Andrade.Chamados.Web.Controllers
 
             try
             {
-                usuario.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
+                //usuario.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
                 usuario.Cpf = usuario.Cpf.Replace(".", "").Replace("-","").Trim();
                 usuario.Cep = usuario.Cep.Replace("-","").Trim();
                                
