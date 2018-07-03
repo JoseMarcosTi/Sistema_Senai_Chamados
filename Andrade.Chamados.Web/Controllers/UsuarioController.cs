@@ -10,9 +10,11 @@ using System.Web.Mvc;
 
 namespace Andrade.Chamados.Web.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         // GET: Usuario
+      
         public ActionResult Index()
         {
             ListaUsuarioViewModel vmListaUsuario = new ListaUsuarioViewModel();
@@ -139,5 +141,7 @@ namespace Andrade.Chamados.Web.Controllers
                 }
             }
         }
+
+
     }
 }

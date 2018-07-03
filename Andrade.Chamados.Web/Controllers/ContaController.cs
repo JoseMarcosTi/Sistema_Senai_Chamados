@@ -7,6 +7,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -37,6 +38,14 @@ namespace Andrade.Chamados.Web.Controllers
 
                 if (usuarioDomain != null)
                 {
+                    var identity = new ClaimsIdentity(new[] {
+                        new Claim(ClaimTypes.Name, usuarioDomain.Nome),
+                        new Claim(ClaimTypes.Email, usuarioDomain.Email),
+                        new Claim(ClaimTypes.PrimarySid, usuarioDomain.Id.ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, usuarioDomain.Id.ToString())
+                    }, "ApplicationCookie");
+
+                    Request.GetOwinContext().Authentication.SignIn(identities: identity);
                     return RedirectToAction("Index", "Usuario");
                 }
                 else
@@ -110,6 +119,16 @@ namespace Andrade.Chamados.Web.Controllers
                     new SelectListItem{ Text = "Feminino", Value = "2"},
                 }, "Value", "Text");
         }
-    }
 
+
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Request.GetOwinContext().Authentication.SignOut("ApplicationCookie");
+
+            return RedirectToAction("Login");
+        }
+
+    }
 }

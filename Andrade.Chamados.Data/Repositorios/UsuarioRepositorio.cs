@@ -67,7 +67,8 @@ namespace Andrade.Chamados.Data.Repositorios
         /// <returns> Retorna true se o usuário for excluido e false, caso ocorra algum erro </returns>
         public bool Deletar(UsuarioDomain domain)
         {
-            _contexto.Usuarios.Remove(domain);
+            var usuario = _contexto.Usuarios.Single(o => o.Id == domain.Id);
+            _contexto.Usuarios.Remove(usuario);
             int linhasExcluidas = _contexto.SaveChanges();
 
             if (linhasExcluidas > 0)
