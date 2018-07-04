@@ -15,6 +15,16 @@
     <div class="starter-template">
         <h1>Tela de usuário</h1>
 
+        @if (ViewBag.Erro != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.Erro
+            </div> 
+        }
+
+        @if (Model != null)
+        {
+
         @TempData["Erro"]
 
         <table class="table">
@@ -40,8 +50,9 @@
                 }
             </tbody>
         </table>
-
+        }
     </div>
+    
 
 </main>
 

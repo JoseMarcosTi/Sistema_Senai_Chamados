@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Andrade.Chamado.Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -35,9 +36,11 @@ namespace Andrade.Chamados.Web.ViewModels.Usuario
         [MaxLength(14)]
         public string Cpf { get; set; }
 
-        public SelectList Sexo { get; set; }
+        public SelectList ListaSexo { get; set; }
         //[Required(ErrorMessage = "Informe o sexo")]
-        public string SexoId { get; set; }
+        public EnSexo Sexo { get; set; }
+
+        public EnTipoUsuario TipoUsuario { get; set; }
 
         [MaxLength(9, ErrorMessage = " O CEP deve conter 11 números")]
         public string Cep { get; set; }

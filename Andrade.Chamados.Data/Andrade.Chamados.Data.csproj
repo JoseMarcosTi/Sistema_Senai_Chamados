@@ -59,6 +59,11 @@
     <Compile Include="Migrations\201806260030055_AtualizacaoDb.Designer.cs">
       <DependentUpon>201806260030055_AtualizacaoDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807032314381_Alteração_Tabela_Usuário_03\07\2018.cs" />
+    <Compile Include="Migrations\201807032315493_Alteracao_Tabela_Usuario.cs" />
+    <Compile Include="Migrations\201807032315493_Alteracao_Tabela_Usuario.Designer.cs">
+      <DependentUpon>201807032315493_Alteracao_Tabela_Usuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\UsuarioRepositorio.cs" />
@@ -79,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806260030055_AtualizacaoDb.resx">
       <DependentUpon>201806260030055_AtualizacaoDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807032315493_Alteracao_Tabela_Usuario.resx">
+      <DependentUpon>201807032315493_Alteracao_Tabela_Usuario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

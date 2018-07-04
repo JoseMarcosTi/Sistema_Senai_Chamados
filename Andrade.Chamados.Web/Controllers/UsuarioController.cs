@@ -10,13 +10,18 @@ using System.Web.Mvc;
 
 namespace Andrade.Chamados.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Administrador")]
     public class UsuarioController : Controller
     {
         // GET: Usuario
       
         public ActionResult Index()
         {
+            if (!User.IsInRole("Administrador"))
+            {
+                ViewBag.Erro = " Você não tem permissão para acessar está tela";
+                return View();
+            }
             ListaUsuarioViewModel vmListaUsuario = new ListaUsuarioViewModel();
 
             using (UsuarioRepositorio repUsuario = new UsuarioRepositorio())

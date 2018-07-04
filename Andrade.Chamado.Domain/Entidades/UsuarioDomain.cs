@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Andrade.Chamado.Domain.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +22,9 @@ namespace Andrade.Chamado.Domain.Entidades
         [Required]
         [MaxLength(8)]
         public string Senha { get; set; }
+
+        public EnTipoUsuario TipoUsuario { get; set; }
+        public EnSexo Sexo { get; set; }
 
         [MaxLength(11)]
         public string Cpf { get; set; }

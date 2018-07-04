@@ -1,8 +1,10 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
+using Andrade.Chamado.Domain.Enum;
 using Andrade.Chamados.Data.Contexto;
 using Andrade.Chamados.Data.Repositorios;
 using Andrade.Chamados.Web.Models;
 using Andrade.Chamados.Web.ViewModels;
+using Andrade.Chamados.Web.ViewModels.Usuario;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -41,8 +43,9 @@ namespace Andrade.Chamados.Web.Controllers
                     var identity = new ClaimsIdentity(new[] {
                         new Claim(ClaimTypes.Name, usuarioDomain.Nome),
                         new Claim(ClaimTypes.Email, usuarioDomain.Email),
-                        new Claim(ClaimTypes.PrimarySid, usuarioDomain.Id.ToString()),
-                        new Claim(ClaimTypes.NameIdentifier, usuarioDomain.Id.ToString())
+                        new Claim(ClaimTypes.NameIdentifier, usuarioDomain.Id.ToString()),
+                        new Claim(ClaimTypes.Role, usuarioDomain.TipoUsuario.ToString()),
+                        new Claim("Telefone", usuarioDomain.Telefone.ToString())
                     }, "ApplicationCookie");
 
                     Request.GetOwinContext().Authentication.SignIn(identities: identity);
@@ -60,11 +63,11 @@ namespace Andrade.Chamados.Web.Controllers
         [HttpGet]
         public ActionResult CadastrarUsuario()
         {
-            CadastrarUsuarioViewModel cadastrarUsuario = new CadastrarUsuarioViewModel();
+            UsuarioViewModel cadastrarUsuario = new UsuarioViewModel();
             // cadastrarUsuario.Nome = " Marcos Andrade";
             // cadastrarUsuario.Email = " andrade.ti@outlook.com";
 
-            cadastrarUsuario.Sexo = new SelectList(
+            cadastrarUsuario.ListaSexo = new SelectList(
                 new List<SelectListItem>
                 {
                     new SelectListItem{ Text = "Masculino", Value = "1"},
@@ -76,9 +79,9 @@ namespace Andrade.Chamados.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CadastrarUsuario(CadastrarUsuarioViewModel usuario)
+        public ActionResult CadastrarUsuario(UsuarioViewModel usuario)
         {
-            usuario.Sexo = ListarSexo();
+            usuario.ListaSexo = ListarSexo();
 
             if (!ModelState.IsValid)
             {
@@ -91,10 +94,11 @@ namespace Andrade.Chamados.Web.Controllers
                 //usuario.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
                 usuario.Cpf = usuario.Cpf.Replace(".", "").Replace("-","").Trim();
                 usuario.Cep = usuario.Cep.Replace("-","").Trim();
+                usuario.TipoUsuario = EnTipoUsuario.Padrao;
                                
                 using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
                 {
-                    _repUsuario.Inserir(Mapper.Map<CadastrarUsuarioViewModel, UsuarioDomain>(usuario));
+                    _repUsuario.Inserir(Mapper.Map<UsuarioViewModel, UsuarioDomain>(usuario));
                 }
 
                 TempData["Mensagem"] = " Usuário Cadastrado";

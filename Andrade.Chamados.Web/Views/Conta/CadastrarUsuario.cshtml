@@ -1,4 +1,4 @@
-﻿@model Andrade.Chamados.Web.Models.CadastrarUsuarioViewModel
+﻿@model Andrade.Chamados.Web.ViewModels.Usuario.UsuarioViewModel
 
 @{
     ViewBag.Title = "Cadastrar usuário";
@@ -63,7 +63,7 @@
 
 
     <div class="form-label-group">
-        @Html.DropDownListFor(x => x.SexoId, Model.Sexo, " Selecione sexo", new { @class = "form-control" })
+        @Html.DropDownListFor(x => x.Sexo, Model.ListaSexo, " Selecione sexo", new { @class = "form-control" })
     </div>
 
 
