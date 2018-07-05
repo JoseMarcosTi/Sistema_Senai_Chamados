@@ -39,5 +39,7 @@ namespace Andrade.Chamado.Domain.Entidades
         public string Cidade { get; set; }
         public string Estado { get; set; }
 
+        public virtual ICollection<ChamadoDomain> Chamados { get; set; }
+
     }
 }

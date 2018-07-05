@@ -32,6 +32,7 @@ namespace Andrade.Chamados.Web.Controllers
             return View(vmListaUsuario);
         }
 
+
         [HttpGet]
         public ActionResult Editar(Guid id)
         {

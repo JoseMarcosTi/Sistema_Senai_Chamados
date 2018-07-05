@@ -10,6 +10,7 @@ namespace Andrade.Chamados.Web.AutoMapper
            {
                x.AddProfile<DomainToViewModelMappingProfile>();
                x.AddProfile<ViewModelToDomainMappingProfile>();
+               
            });
         }
     }

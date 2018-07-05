@@ -24,6 +24,7 @@ namespace Andrade.Chamados.Web.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public  ActionResult Login(LoginViewModel login)
@@ -60,6 +61,7 @@ namespace Andrade.Chamados.Web.Controllers
             
         }
 
+
         [HttpGet]
         public ActionResult CadastrarUsuario()
         {
@@ -76,6 +78,7 @@ namespace Andrade.Chamados.Web.Controllers
 
             return View(cadastrarUsuario);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -114,6 +117,7 @@ namespace Andrade.Chamados.Web.Controllers
 
         }
 
+
         private SelectList ListarSexo()
         {
             return new SelectList(
@@ -125,7 +129,6 @@ namespace Andrade.Chamados.Web.Controllers
         }
 
 
-
         [HttpGet]
         public ActionResult Logout()
         {
@@ -133,6 +136,8 @@ namespace Andrade.Chamados.Web.Controllers
 
             return RedirectToAction("Login");
         }
+
+
 
     }
 }

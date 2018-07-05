@@ -1,5 +1,6 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
 using Andrade.Chamados.Web.Models;
+using Andrade.Chamados.Web.ViewModels.Chamado;
 using Andrade.Chamados.Web.ViewModels.Usuario;
 using AutoMapper;
 using System;
@@ -14,7 +15,10 @@ namespace Andrade.Chamados.Web.AutoMapper
         protected override void Configure()
         {
             Mapper.CreateMap(typeof(CadastrarUsuarioViewModel), typeof(UsuarioDomain));
+
             Mapper.CreateMap(typeof(UsuarioViewModel), typeof(UsuarioDomain));
+
+            Mapper.CreateMap(typeof(ChamadoViewModel), typeof(ChamadoDomain));
         }
     }
 }

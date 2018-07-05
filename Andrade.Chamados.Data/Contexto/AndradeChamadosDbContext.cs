@@ -16,6 +16,7 @@ namespace Andrade.Chamados.Data.Contexto
         }
 
         public DbSet<UsuarioDomain> Usuarios { get; set; }
+        public DbSet<ChamadoDomain> Chamados { get; set; }
 
         public override int SaveChanges()
         {
