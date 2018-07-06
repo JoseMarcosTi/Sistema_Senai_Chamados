@@ -175,6 +175,8 @@
     <Content Include="Views\Usuario\Editar.cshtml" />
     <Content Include="Views\Usuario\Deletar.cshtml" />
     <Content Include="Views\Perfil\AlterarSenha.cshtml" />
+    <Content Include="Views\Chamado\Index.cshtml" />
+    <Content Include="Views\Chamado\Cadastrar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -184,7 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Chamado\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
