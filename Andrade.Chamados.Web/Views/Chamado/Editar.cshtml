@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Cadastrar";
+    ViewBag.Title = "Editar";
     Layout = "~/Views/Shared/_LayoutPage01.cshtml";
 }
 
@@ -21,15 +21,18 @@
 
 
 
-@using (Html.BeginForm("Cadastrar", "Chamado", new { @class = " form-singnin" }))
+@using (Html.BeginForm("Editar", "Chamado", new { @class = " form-singnin" }))
 {
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     @Html.AntiForgeryToken()
 
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.IdUsuario)
+
     <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal"> Cadastrar chamado</h1>
-        <p> Cadstre um novo chamado</p>
+        <h1 class="h3 mb-3 font-weight-normal"> Editar chamado</h1>
+        <p> Edite um chamado</p>
     </div>
 
     <div class="form-group">
@@ -60,4 +63,6 @@
 
 
 }
+
+
 

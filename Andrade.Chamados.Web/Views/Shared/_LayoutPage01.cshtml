@@ -26,18 +26,18 @@
                     if (User.Identity.IsAuthenticated)
                     {
                         <li>
-                            @Html.ActionLink("Chamados", "Index", "Chamado")
+                             <a href="/Chamado" class = "nav-link"> Chamados </a>
                         </li>
                     }
 
                     if (User.IsInRole("Administrador"))
                     {
                         <li>
-                            @Html.ActionLink("Usuarios", "Index", "Usuario")
+                            <a href="/Usuario" class = "nav-link"> Usuário</a>
                         </li>
                     }
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                             @User.Identity.Name <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
@@ -48,11 +48,11 @@
                 }
                 else
                 {
-                    <li class="nav-item login">
+                    <li class="nav-item login" style="position:center">
                         <a class="nav-link " href="/conta/login">Login <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item cadastrarusuario">
-                        <a class="nav-link" href="/conta/cadastrarusuario">Cadastrar Conta</a>
+                        <a class="nav-link" href="/conta/cadastrarusuario">Cadastrar conta</a>
                     </li>
                 }
             </ul>

@@ -1,14 +1,10 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
 using Andrade.Chamado.Domain.Enum;
-using Andrade.Chamados.Data.Contexto;
 using Andrade.Chamados.Data.Repositorios;
-using Andrade.Chamados.Web.Models;
 using Andrade.Chamados.Web.ViewModels;
 using Andrade.Chamados.Web.ViewModels.Usuario;
 using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;

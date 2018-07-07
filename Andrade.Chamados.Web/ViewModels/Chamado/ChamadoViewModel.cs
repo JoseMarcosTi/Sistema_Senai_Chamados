@@ -53,7 +53,7 @@ namespace Andrade.Chamados.Web.ViewModels.Chamado
                 Value = ((int)c).ToString()
            }).ToList(), "Value" , "Text");
 
-            return ListaSetores;
+            return listaSetores;
         }
 
 
@@ -70,7 +70,7 @@ namespace Andrade.Chamados.Web.ViewModels.Chamado
                 Value = ((int)c).ToString()
             }).ToList(), "Value", "Text");
 
-            return ListaStatus;
+            return listaStatus;
         }
 
 

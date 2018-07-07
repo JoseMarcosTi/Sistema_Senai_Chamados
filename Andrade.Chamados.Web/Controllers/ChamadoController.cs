@@ -65,8 +65,8 @@ namespace Andrade.Chamados.Web.Controllers
                 {
                     var identity = User.Identity as ClaimsIdentity;
                     var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-                    _repChamado.Inserir(Mapper.Map<ChamadoViewModel, ChamadoDomain>(chamado));
                     chamado.IdUsuario = new Guid(id);
+                    _repChamado.Inserir(Mapper.Map<ChamadoViewModel, ChamadoDomain>(chamado));
                 }
 
                 TempData["Sucesso"] = " Chamado cadastrado...Aguarde!!!";
@@ -78,6 +78,133 @@ namespace Andrade.Chamados.Web.Controllers
                 return View(chamado);
             }
         }
+        
+        [HttpGet]
+        public ActionResult Editar(string id)
+        {
+            ChamadoViewModel chamado = new ChamadoViewModel();
 
+            try
+            {
+
+                if (id == null)
+                {
+                    TempData["Erro"] = " Id não identificado";
+                    return RedirectToAction("Index");
+                }
+
+                using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
+                {
+                    chamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(new Guid(id)));
+
+                    if (chamado == null)
+                    {
+                        TempData["Erro"] = "Chamado não encontrado";
+                        return RedirectToAction("Index");
+                    }
+
+                    #region Buscar Id usuário
+
+                    var identity = User.Identity as ClaimsIdentity;
+                    var idUsuario = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                    #endregion
+
+                    if (User.IsInRole("Administrador") || idUsuario == chamado.IdUsuario.ToString())
+                    {
+                        return View(chamado);
+
+                    }
+                    else
+                    {
+                          TempData["Erro"] = " Este chamado pertence a outro usuário";
+                        return RedirectToAction("Index");
+                    }
+
+                    return View(chamado);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                ViewBag.Erro = ex.Message;
+                return View(chamado);
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(ChamadoViewModel chamado)
+        {
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Erro = " Dados inválidos";
+                    return View(chamado);
+                }
+
+                using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
+                {
+                    _repChamado.Alterar(Mapper.Map<ChamadoViewModel, ChamadoDomain>(chamado));
+                    TempData["Sucesso"] = " Chamado alterado";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Erro = ex.Message;
+                return View();
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult Excluir(string id)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    TempData["Erro"] = " Informe o id do chamado";
+                    return RedirectToAction("Index");
+                }
+
+                using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
+                {
+                    ChamadoViewModel chamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(new Guid(id)));
+
+                    if (chamado == null)
+                    {
+                        TempData["Erro"] = "Chamado não encontrado";
+                        return RedirectToAction("Index");
+                    }
+
+                    #region Buscar Id usuário
+
+                    var identity = User.Identity as ClaimsIdentity;
+                    var idUsuario = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+                    #endregion
+
+                    if (User.IsInRole("Administrador") || idUsuario == chamado.IdUsuario.ToString())
+                    {
+                        return View(chamado);
+                    }
+
+                    TempData["Erro"] = "Você não possui permissão para excluir este chamado";
+                    return RedirectToAction("Index");
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Erro = ex.Message;
+                return View();
+            }
+        }
     }
 }
