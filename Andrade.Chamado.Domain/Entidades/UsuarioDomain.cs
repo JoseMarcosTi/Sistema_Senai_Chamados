@@ -20,7 +20,7 @@ namespace Andrade.Chamado.Domain.Entidades
         public string Email { get; set; }
 
         [Required]
-        [MaxLength(8)]
+        [MaxLength(150)]
         public string Senha { get; set; }
 
         public EnTipoUsuario TipoUsuario { get; set; }

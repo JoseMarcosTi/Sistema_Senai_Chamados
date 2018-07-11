@@ -1,5 +1,6 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
 using Andrade.Chamados.Data.Repositorios;
+using Andrade.Chamados.Web.Util;
 using Andrade.Chamados.Web.ViewModels.Usuario;
 using AutoMapper;
 using System;
@@ -73,9 +74,9 @@ namespace Andrade.Chamados.Web.Controllers
 
             try
             {
-                //usuario.Telefone = usuario.Telefone.Replace("(", "").Replace(")", "").Replace("-", "").Trim();
                 usuario.Cpf = usuario.Cpf.Replace(".", "").Replace("-", "").Trim();
                 usuario.Cep = usuario.Cep.Replace("-", "").Trim();
+                usuario.Senha = Hash.GerarHash(usuario.Senha);
 
                 using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
                 {

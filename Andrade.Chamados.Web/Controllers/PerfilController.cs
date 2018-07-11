@@ -1,5 +1,6 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
 using Andrade.Chamados.Data.Repositorios;
+using Andrade.Chamados.Web.Util;
 using Andrade.Chamados.Web.ViewModels.Conta;
 using System;
 using System.Collections.Generic;
@@ -52,13 +53,13 @@ namespace Andrade.Chamados.Web.Controllers
                     UsuarioDomain usuarioDomain = _repUsuario.BuscarPorId(new Guid(id));
 
                     // Verifica se a senha informada é igual a senha atual
-                    if (senha.SenhaAtual != usuarioDomain.Senha)
+                    if (Hash.GerarHash(senha.SenhaAtual) != usuarioDomain.Senha)
                     {
                         ModelState.AddModelError("SenhaAtual", " Senha incorreta");
                         return View();
                     }
 
-                    usuarioDomain.Senha = senha.NovaSenha;
+                    usuarioDomain.Senha = Hash.GerarHash(senha.NovaSenha);
                     _repUsuario.Alterar(usuarioDomain);
                     TempData["Sucesso"] = " Senha alterada";
                     return RedirectToAction("Index", "Usuario");

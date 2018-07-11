@@ -1,6 +1,7 @@
 ﻿using Andrade.Chamado.Domain.Entidades;
 using Andrade.Chamado.Domain.Enum;
 using Andrade.Chamados.Data.Repositorios;
+using Andrade.Chamados.Web.Util;
 using Andrade.Chamados.Web.ViewModels;
 using Andrade.Chamados.Web.ViewModels.Usuario;
 using AutoMapper;
@@ -33,7 +34,7 @@ namespace Andrade.Chamados.Web.Controllers
 
             using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
             {
-                UsuarioDomain usuarioDomain = _repUsuario.Login(login.Email, login.Senha);
+                UsuarioDomain usuarioDomain = _repUsuario.Login(login.Email, Hash.GerarHash(login.Senha));
 
                 if (usuarioDomain != null)
                 {
@@ -90,11 +91,11 @@ namespace Andrade.Chamados.Web.Controllers
 
             try
             {
-                //usuario.Telefone = usuario.Telefone.Replace("(","").Replace(")", "").Replace("-", "").Trim();
                 usuario.Cpf = usuario.Cpf.Replace(".", "").Replace("-","").Trim();
                 usuario.Cep = usuario.Cep.Replace("-","").Trim();
                 usuario.TipoUsuario = EnTipoUsuario.Padrao;
-                               
+                usuario.Senha = Hash.GerarHash(usuario.Senha);
+
                 using (UsuarioRepositorio _repUsuario = new UsuarioRepositorio())
                 {
                     _repUsuario.Inserir(Mapper.Map<UsuarioViewModel, UsuarioDomain>(usuario));

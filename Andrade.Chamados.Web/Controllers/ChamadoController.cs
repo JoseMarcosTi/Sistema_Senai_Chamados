@@ -34,8 +34,11 @@ namespace Andrade.Chamados.Web.Controllers
                     vmListaChamados.ListaChamados = Mapper.Map<List<ChamadoDomain>, List<ChamadoViewModel>>(_repChamado.Listar(new Guid(id)));
                 }
 
-                return View(vmListaChamados);
+               
             }
+
+            return View(vmListaChamados);
+
         }
 
 
@@ -80,7 +83,7 @@ namespace Andrade.Chamados.Web.Controllers
         }
         
         [HttpGet]
-        public ActionResult Editar(string id)
+        public ActionResult Editar(Guid? id)
         {
             ChamadoViewModel chamado = new ChamadoViewModel();
 
@@ -95,7 +98,7 @@ namespace Andrade.Chamados.Web.Controllers
 
                 using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
                 {
-                    chamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(new Guid(id)));
+                    chamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(id.Value));
 
                     if (chamado == null)
                     {
@@ -120,8 +123,6 @@ namespace Andrade.Chamados.Web.Controllers
                           TempData["Erro"] = " Este chamado pertence a outro usuário";
                         return RedirectToAction("Index");
                     }
-
-                    return View(chamado);
                 }
             }
             catch (System.Exception ex)
@@ -162,10 +163,16 @@ namespace Andrade.Chamados.Web.Controllers
 
 
         [HttpGet]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(Guid? id)
         {
             try
             {
+                if (!User.IsInRole("Administrador"))
+                {
+                    TempData["Erro"] = " Você não tem permissão para excluir este chamado";
+                    return RedirectToAction("Index");
+                }
+
                 if (id == null)
                 {
                     TempData["Erro"] = " Informe o id do chamado";
@@ -174,7 +181,7 @@ namespace Andrade.Chamados.Web.Controllers
 
                 using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
                 {
-                    ChamadoViewModel chamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(new Guid(id)));
+                    ChamadoViewModel chamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(id.Value));
 
                     if (chamado == null)
                     {
@@ -206,5 +213,49 @@ namespace Andrade.Chamados.Web.Controllers
                 return View();
             }
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Excluir(ChamadoViewModel chamado)
+        {
+            try
+            {
+                if (!User.IsInRole("Administrador"))
+                {
+                    TempData["Erro"] = " Você não tem permissão para excluir este chamado";
+                    return RedirectToAction("Index");
+                }
+
+                if (chamado.Id == Guid.Empty)
+                {
+                    TempData["Erro"] = " Informe o id do chamado";
+                    return RedirectToAction("Index");
+                }
+
+                using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
+                {
+                    ChamadoViewModel vmChamado = Mapper.Map<ChamadoDomain, ChamadoViewModel>(_repChamado.BuscarPorId(chamado.Id));
+                    if (vmChamado == null)
+                    {
+                        TempData["Erro"] = "Chamado não encontrado";
+                        return RedirectToAction("Index");
+                    }
+
+                    _repChamado.Deletar(Mapper.Map<ChamadoViewModel, ChamadoDomain>(vmChamado));
+                    TempData["Sucesso"] = "Chamado excluido";
+                    return RedirectToAction("Index");
+                     
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Erro = ex.Message;
+                return View(chamado);
+            }
+        }
+
+
     }
 }
