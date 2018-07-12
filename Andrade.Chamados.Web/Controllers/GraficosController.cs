@@ -2,6 +2,7 @@
 using Andrade.Chamado.Domain.Enum;
 using Andrade.Chamados.Data.Repositorios;
 using Andrade.Chamados.Web.ViewModels.Chamado;
+using Andrade.Chamados.Web.ViewModels.Grafico;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,9 @@ namespace Andrade.Chamados.Web.Controllers
         // GET: Graficos
         public ActionResult Index()
         {
-            return View();
-        }
-
-
-        public JsonResult GetDataStatus()
-        {
             try
             {
+                ListaGraficoViewModel vmGrafico = new ListaGraficoViewModel();
                 ListaChamadoViewModel vmListaChamados = new ListaChamadoViewModel();
 
                 using (ChamadoRepositorio _repChamado = new ChamadoRepositorio())
@@ -43,22 +39,71 @@ namespace Andrade.Chamados.Web.Controllers
                     }
                 }
 
+                #region Gráficos status
+
                 var grupoStatus = vmListaChamados.ListaChamados
                                                     .GroupBy(x => x.Status)
                                                     .Select(n => new
                                                     {
-                                                        Status = (EnStatus)n.Key,
-                                                        Quantidade = n.Count()
+                                                        Status = RetornaStatus(n.Key),
+                                                        Quantidade = Convert.ToDouble(n.Count())
                                                     }).OrderBy(n => n.Quantidade);
 
-                return Json(new { sucesso = true, resultado = grupoStatus }, JsonRequestBehavior.AllowGet);
+
+                vmGrafico.GraficoStatus.Labels = grupoStatus.Select(X => X.Status).ToArray();
+
+                vmGrafico.GraficoStatus.Data = grupoStatus.Select(x => x.Quantidade).ToArray();
+
+                #endregion
+
+
+                #region Gráficos setor
+
+                var grupoSetor = vmListaChamados.ListaChamados
+                                                    .GroupBy(x => x.Setor)
+                                                    .Select(n => new
+                                                    {
+                                                        Setor = RetornaSetor(n.Key),
+                                                        Quantidade = Convert.ToDouble(n.Count())
+                                                    }).OrderBy(n => n.Quantidade);
+
+
+                vmGrafico.GraficoSetor.Labels = grupoSetor.Select(X => X.Setor).ToArray();
+
+                vmGrafico.GraficoSetor.Data = grupoSetor.Select(x => x.Quantidade).ToArray();
+
+                #endregion
+
+                return View(vmGrafico);
             }
             catch (Exception ex)
             {
                 ViewBag.Erro = ex.Message;
-                return Json(new { sucesso = false, mensagem = ex.Message }, JsonRequestBehavior.AllowGet);
+                return View();
             }
         }
+
+        private string RetornaSetor(EnSetor setor)
+        {
+            return setor.ToString();
+        }
+
+        private string RetornaStatus(EnStatus status)
+        {
+            switch (status)
+            {
+                case EnStatus.Aguardando:
+                    return "Aguardando";
+                case EnStatus.Iniciado:
+                    return "Iniciado";
+                case EnStatus.Finalizado:
+                    return "Finalizado";
+            }
+            return null;
+        }
+
+
+
 
     }
 }
