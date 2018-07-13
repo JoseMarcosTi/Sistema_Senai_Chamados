@@ -119,6 +119,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\Login.png" />
     <Content Include="Content\img\SENAI.png" />
+    <Content Include="Content\Signin.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -162,6 +163,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelperExtension.cs" />
+    <Compile Include="Helpers\MyHelper.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Hash.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

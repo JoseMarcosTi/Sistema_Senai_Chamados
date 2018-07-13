@@ -5,18 +5,15 @@
     Layout = "~/Views/Shared/_LayoutPage01.cshtml";
 }
 
-
-@section Styles{
-
-    <link href="http://getbootstrap.com/docs/4.1/examples/starter-template/starter-template.css" rel="stylesheet">
-
-}
-
-<main role="main" class="container">
-
-    <div class="starter-template">
-
-        <h2> Tela de chamados </h2>
+<div class="jumbotron">
+    <center>
+        <div class="container">
+            <h1> Tela de usuários</h1>
+            <p> Visualize todo os usuários cadastrados no sistema</p>
+            <p><a href="/Chamado/Cdastrar" class="btn btn-lg btn-primary" role="button"> Criar chamado</a> </p>
+        </div>
+    </center>
+</div>
 
         @if (TempData["Erro"] != null)
         {
@@ -40,7 +37,7 @@
                     <th> Status </th>
                     <th> Data de criação </th>
                     <th>
-                        <a href="/Chamado/Cadastrar" class="btn btn-primary"> Cadastrar </a>
+                        
                     </th>
                 </tr>
             </thead>
@@ -54,11 +51,11 @@
                     <td> @Html.DisplayFor(x => chamado.Status)</td>
                     <td> @Html.DisplayFor(x => chamado.DataCriacao)</td>
                     <td>
-                        <a class="btn btn-primary" href="/Chamado/Editar/@chamado.Id"> Editar </a> &nbsp; &nbsp;
+                        <a class="btn btn-primary" href="/Chamado/Editar/@chamado.Id"> <i class="glyphicon glyphicon-edit"></i> </a> &nbsp; &nbsp;
 
                         @if (User.IsInRole("Administrador"))
                         {
-                            <a class="btn btn-danger" href="/Chamado/Excluir/@chamado.Id"> Excluír </a>
+                            <a class="btn btn-danger" href="/Chamado/Excluir/@chamado.Id"><i class="glyphicon glyphicon-trash"></i> </a>
                         }
 
                     </td>
@@ -68,7 +65,5 @@
             </tbody>
         </table>
 
-    </div>
-
-</main>
+ 
 

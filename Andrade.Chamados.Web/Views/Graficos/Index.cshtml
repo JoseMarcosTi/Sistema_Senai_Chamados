@@ -1,11 +1,20 @@
 ﻿@model Andrade.Chamados.Web.ViewModels.Grafico.ListaGraficoViewModel
+@using Andrade.Chamados.Web.Helpers
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage01.cshtml";
 }
 
-<div class="container">
+<div class="jumbotron">
+    <center>
+        <div class="container">
+            <h1> Tela de gráficos</h1>
+            <p> Visualize todo as inoformações da sua operação rapidamente</p>
+        </div>
+    </center>
+</div>
+
     <div class="panel panel-default">
         <div class="panel-heading"> gráficos do status</div>
         <div class="panel-body">
@@ -33,7 +42,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 @section Scripts
   {
@@ -43,133 +52,32 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var myBarChartStatus = new Chart(document.getElementById("bar-chart-status"), {
-                type: 'bar',
-                data: {
-                    labels: @Html.Raw(Json.Encode(Model.GraficoStatus.Labels)),
-                    datasets: [
-                        {
-                            label: "Status",
-                            backgroundColor: [
-                                window.chartColors.red,
-                                window.chartColors.yellow,
-                                window.chartColors.green
-                            ],
-                            data: @Html.Raw(Json.Encode(Model.GraficoStatus.Data))
-                        }
-                    ]
-                },
-                options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: "Gráficos de status barra"
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks:{
-                                beginAtZero : true
-                            }
-                        }]
-                    }
-                }
-            });
 
-             var myPieChartStatus = new Chart(document.getElementById("pie-chart-status"), {
-                type: 'pie',
-                data: {
-                    labels: @Html.Raw(Json.Encode(Model.GraficoStatus.Labels)),
-                    datasets: [
-                        {
-                            label: "Status",
-                            backgroundColor: [
-                                window.chartColors.red,
-                                window.chartColors.yellow,
-                                window.chartColors.green
-                            ],
-                            data: @Html.Raw(Json.Encode(Model.GraficoStatus.Data))
-                        }
-                    ]
-                },
-                options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: "Gráficos de status circular"
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks:{
-                                beginAtZero : true
-                            }
-                        }]
-                    }
-                }
-            });
 
-            var myBarChartStatus = new Chart(document.getElementById("bar-chart-setor"), {
-                type: 'bar',
-                data: {
-                    labels: @Html.Raw(Json.Encode(Model.GraficoSetor.Labels)),
-                    datasets: [
-                        {
-                            label: "Setor",
-                            backgroundColor: [
-                                window.chartColors.red,
-                                window.chartColors.yellow,
-                                window.chartColors.green
-                            ],
-                            data: @Html.Raw(Json.Encode(Model.GraficoSetor.Data))
-                        }
-                    ]
-                },
-                options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: "Gráficos de status barra"
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks:{
-                                beginAtZero : true
-                            }
-                        }]
-                    }
-                }
-            });
+            /* GRÁFICOS DO STATUS */
+            @Html.GerarGraficoChartJs("bar-chart-status", 
+           Html.Raw(Json.Encode(Model.GraficoStatus.Labels)),
+           Html.Raw(Json.Encode(Model.GraficoStatus.Data)),
+           "bar", "Gráfico de barra de status")
 
-             var myPieChartStatus = new Chart(document.getElementById("pie-chart-setor"), {
-                type: 'pie',
-                data: {
-                    labels: @Html.Raw(Json.Encode(Model.GraficoSetor.Labels)),
-                    datasets: [
-                        {
-                            label: "Setor",
-                            backgroundColor: [
-                                window.chartColors.red,
-                                window.chartColors.yellow,
-                                window.chartColors.green
-                            ],
-                            data: @Html.Raw(Json.Encode(Model.GraficoSetor.Data))
-                        }
-                    ]
-                },
-                options: {
-                    legend: { display: true },
-                    title: {
-                        display: true,
-                        text: "Gráficos de status circular"
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks:{
-                                beginAtZero : true
-                            }
-                        }]
-                    }
-                }
-            });
+              @Html.GerarGraficoChartJs("pie-chart-status",
+           Html.Raw(Json.Encode(Model.GraficoStatus.Labels)),
+           Html.Raw(Json.Encode(Model.GraficoStatus.Data)),
+           "pie", "Gráfico de pizza de status")
+           
+           /* GRÁFICOS DO SETOR */
+
+           @Html.GerarGraficoChartJs("bar-chart-setor", 
+           Html.Raw(Json.Encode(Model.GraficoStatus.Labels)),
+           Html.Raw(Json.Encode(Model.GraficoStatus.Data)),
+           "bar", "Gráfico de barra de setor")
+
+           @Html.GerarGraficoChartJs("pie-chart-setor",
+           Html.Raw(Json.Encode(Model.GraficoStatus.Labels)),
+           Html.Raw(Json.Encode(Model.GraficoStatus.Data)),
+           "pie", "Gráfico de pizza de setor")
+           
+           
         });
     </script>
 
